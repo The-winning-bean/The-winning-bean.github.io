@@ -9,6 +9,18 @@
   <link rel="stylesheet" href="./css/blog.css">
   <link rel="stylesheet" href="./css/home.css">
   <script src="./js/jq.js"></script>
+  <style>
+    #outputDiv {
+      font-family: "Arial", sans-serif; /* 设置字体 */
+      line-height: 1.6; /* 设置行高 */
+      color: white; /* 设置文字颜色 */
+      border: 1px solid #ff8181;
+      padding: 20px; /* 设置内边距 */
+      margin-top: -10px; /* 顶部外边距 */
+      border-radius: 5px; /* 设置圆角边框 */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    }
+  </style>
 </head>
 
 
@@ -145,7 +157,10 @@
 
           </div>
           <div class="borderbotm"></div>
-          <div class="buttom-box ">
+          <div id="outputDiv">
+
+          </div>
+          <div class="buttom-box " style="margin-top: 10px;">
             <a class="button" href="img/巽风生.jpg">联系我</a>
           </div>
         </div>
@@ -375,5 +390,51 @@
 <script src="./js/base.js"></script>
 <script type="text/javascript" src="./js/paper-full.min.js"></script>
 <script type="text/javascript" src="./js/canvas.js"></script>
+<script>
+  // 作者的坐标
+  const authorCoords = {
+    lat: 43.151094,
+    lon: 124.342075
+  };
 
+  // 计算距离的函数
+  function calculateDistance(userCoords, authorCoords) {
+    const R = 6371; // 地球半径，单位：公里
+    const dLat = deg2rad(authorCoords.lat - userCoords.latitude);
+    const dLon = deg2rad(authorCoords.lon - userCoords.longitude);
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(userCoords.latitude)) * Math.cos(deg2rad(authorCoords.lat)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = R * c; // 单位：公里
+    return distance;
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI/180);
+  }
+
+  // 获取用户位置并计算距离
+  navigator.geolocation.getCurrentPosition(function(position) {
+    const userCoords = {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    };
+    const userLocationText = `你的坐标是：\n${userCoords.latitude.toFixed(6)}, ${userCoords.longitude.toFixed(6)}`;
+    const distance = calculateDistance(userCoords, authorCoords);
+
+    let message;
+    if (distance < 160) {
+      message = '\n你我相隔不远\n何不相约共叙';
+    } else {
+      message = '\n无论何时何地\n只要心意相通\n便是最美的诗篇';
+    }
+
+    // 将生成的文字内容插入到指定的 div 标签中
+    document.getElementById('outputDiv').innerText = `${userLocationText}\n你我之间的距离约为：\n${distance.toFixed(2)}公里\n${message}`;
+  });
+</script>
 </html>
