@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>相册</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #7c6a54;
+        }
+
+        .imgs {
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+            display: inline-block;
+        }
+
+        .shell {
+            display: grid;
+            padding: 20px;
+            grid-gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-auto-rows: 270px;
+            grid-auto-flow: dense;
+        }
+
+        .shell>div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #7c6a54;
+            border-radius: 5px;
+            color: rgb(255, 255, 255);
+            font: 100 100px 'Kristen ITC';
+            position: relative;
+        }
+
+        span {
+            position: absolute;
+            top: -10px;
+            left: 30px;
+            text-shadow: -5px 0 rgb(0, 0, 0), 0 5px rgb(0, 0, 0), 5px 0 rgb(0, 0, 0), 0 -5px rgb(0, 0, 0);
+        }
+
+        .shell .wide {
+            grid-column: span 2;
+        }
+
+        .shell .tall {
+            grid-row: span 2;
+        }
+
+        .shell .big {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        header {
+            width: 100%;
+            height: 700px;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+            transition: clip-path 0.5s ease;
+            position: relative;
+        }
+
+        .img {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: url(相册img/封面.jpg);
+            background-size: cover;
+            transform: scale(1);
+            transition: transform 0.5s ease;
+        }
+         img {
+             transition: transform 0.3s ease;
+         }
+
+        img:hover {
+            transform: scale(1.07);
+        }
+
+    </style>
+    </style>
+</head>
+
+<body>
+
+<!--cursor: url(鼠标/01.cur),auto;-->
+<div class="shell2">
+    <header>
+        <div class="img"></div>
+    </header>
+    <div class="shell">
+        <div class="tall">
+            <img src="相册img/1%20(001).jpg" alt="" class="imgs">
+            <span>1</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(002).jpg" alt="" class="imgs">
+            <span>2</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(003).jpg" alt="" class="imgs">
+            <span>3</span>
+        </div>
+        <div class="wide">
+            <img src="相册img/1%20(004).jpg" alt="" class="imgs">
+            <span>4</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(005).jpg" alt="" class="imgs">
+            <span>5</span>
+        </div>
+        <div class="tall">
+            <img src="相册img/1%20(006).jpg" alt="" class="imgs">
+            <span>6</span>
+        </div>
+        <div class="big">
+            <img src="相册img/1%20(007).jpg" alt="" class="imgs">
+            <span>7</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(008).jpg" alt="" class="imgs">
+            <span>8</span>
+        </div>
+        <div class="wide">
+            <img src="相册img/1%20(009).jpg" alt="" class="imgs">
+            <span>9</span>
+        </div>
+        <div class="big">
+            <img src="相册img/1%20(010).jpg" alt="" class="imgs">
+            <span>10</span>
+        </div>
+        <div class="tall">
+            <img src="相册img/1%20(011).jpg" alt="" class="imgs">
+            <span>11</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(012).jpg" alt="" class="imgs">
+            <span>12</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(013).jpg" alt="" class="imgs">
+            <span>13</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(014).jpg" alt="" class="imgs">
+            <span>14</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(015).jpg" alt="" class="imgs">
+            <span>15</span>
+        </div>
+        <div class="wide">
+            <img src="相册img/1%20(016).jpg" alt="" class="imgs">
+            <span>16</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(017).jpg" alt="" class="imgs">
+            <span>17</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(018).png" alt="" class="imgs">
+            <span>18</span>
+        </div>
+        <div class="wide">
+            <img src="相册img/1%20(019).jpg" alt="" class="imgs">
+            <span>19</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(020).jpg" alt="" class="imgs">
+            <span>20</span>
+        </div>
+        <div class="wide">
+            <img src="相册img/1%20(021).jpg" alt="" class="imgs">
+            <span>21</span>
+        </div>
+        <div class="big">
+            <img src="相册img/1%20(022).jpg" alt="" class="imgs">
+            <span>22</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(023).jpg" alt="" class="imgs">
+            <span>23</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(024).jpg" alt="" class="imgs">
+            <span>24</span>
+        </div>
+        <div class="big">
+            <img src="相册img/1%20(025).jpg" alt="" class="imgs">
+            <span>25</span>
+        </div>
+        <div class="tall">
+            <img src="相册img/1%20(026).jpg" alt="" class="imgs">
+            <span>26</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(027).jpg" alt="" class="imgs">
+            <span>27</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(028).jpg" alt="" class="imgs">
+            <span>28</span>
+        </div>
+        <div>
+            <img src="相册img/1%20(029).jpg" alt="" class="imgs">
+            <span>29</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    const header = document.querySelector('header');
+    const img = document.querySelector('.img');
+    let scrollDistance = 0;
+    let requestId = null;
+    function updateHeaderClipPath() {
+        const clipPathValue = `polygon(0 0, 100% 0%, 100% ${(scrollDistance <= 600) ? 100 - ((scrollDistance / 600) * 60) : 75}%, 0 100%)`;
+        header.style.clipPath = clipPathValue;
+        const scaleValue = 1 + ((scrollDistance / 600) * 1);
+        img.style.transform = `scale(${scaleValue})`;
+        const opacityValue = (scrollDistance / 600);
+    }
+    function scrollHandler(event) {
+        if (event.deltaY < 0) {
+            scrollDistance = Math.max(0, scrollDistance + event.deltaY);
+        } else {
+            scrollDistance = Math.min(600, scrollDistance + event.deltaY);
+        }
+        if (!requestId) {
+            requestId = window.requestAnimationFrame(() => {
+                updateHeaderClipPath();
+                requestId = null;
+            });
+        }
+    }
+    window.addEventListener('wheel', scrollHandler);
+    function clickEffect() {
+        let balls = [];
+        let longPressed = false;
+        let longPress;
+        let multiplier = 0;
+        let width, height;
+        let origin;
+        let normal;
+        let ctx;
+        const colours = ["#F73859", "#14FFEC", "#00E0FF", "#FF99FE", "#FAF15D"];
+        const canvas = document.createElement("canvas");
+        document.body.appendChild(canvas);
+        canvas.setAttribute("style", "width: 100%; height: 100%; top: 0; left: 0; z-index: 99999; position: fixed; pointer-events: none;");
+        const pointer = document.createElement("span");
+        pointer.classList.add("pointer");
+        document.body.appendChild(pointer);
+
+        if (canvas.getContext && window.addEventListener) {
+            ctx = canvas.getContext("2d");
+            updateSize();
+            window.addEventListener('resize', updateSize, false);
+            loop();
+            window.addEventListener("mousedown", function(e) {
+                pushBalls(randBetween(10, 20), e.clientX, e.clientY);
+                document.body.classList.add("is-pressed");
+                longPress = setTimeout(function(){
+                    document.body.classList.add("is-longpress");
+                    longPressed = true;
+                }, 500);
+            }, false);
+            window.addEventListener("mouseup", function(e) {
+                clearInterval(longPress);
+                if (longPressed == true) {
+                    document.body.classList.remove("is-longpress");
+                    pushBalls(randBetween(50 + Math.ceil(multiplier), 100 + Math.ceil(multiplier)), e.clientX, e.clientY);
+                    longPressed = false;
+                }
+                document.body.classList.remove("is-pressed");
+            }, false);
+            window.addEventListener("mousemove", function(e) {
+                let x = e.clientX;
+                let y = e.clientY;
+                pointer.style.top = y + "px";
+                pointer.style.left = x + "px";
+            }, false);
+        } else {
+            console.log("canvas or addEventListener is unsupported!");
+        }
+
+
+        function updateSize() {
+            canvas.width = window.innerWidth * 2;
+            canvas.height = window.innerHeight * 2;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.scale(2, 2);
+            width = (canvas.width = window.innerWidth);
+            height = (canvas.height = window.innerHeight);
+            origin = {
+                x: width / 2,
+                y: height / 2
+            };
+            normal = {
+                x: width / 2,
+                y: height / 2
+            };
+        }
+        class Ball {
+            constructor(x = origin.x, y = origin.y) {
+                this.x = x;
+                this.y = y;
+                this.angle = Math.PI * 2 * Math.random();
+                if (longPressed == true) {
+                    this.multiplier = randBetween(14 + multiplier, 15 + multiplier);
+                } else {
+                    this.multiplier = randBetween(6, 12);
+                }
+                this.vx = (this.multiplier + Math.random() * 0.5) * Math.cos(this.angle);
+                this.vy = (this.multiplier + Math.random() * 0.5) * Math.sin(this.angle);
+                this.r = randBetween(8, 12) + 3 * Math.random();
+                this.color = colours[Math.floor(Math.random() * colours.length)];
+            }
+            update() {
+                this.x += this.vx - normal.x;
+                this.y += this.vy - normal.y;
+                normal.x = -2 / window.innerWidth * Math.sin(this.angle);
+                normal.y = -2 / window.innerHeight * Math.cos(this.angle);
+                this.r -= 0.3;
+                this.vx *= 0.9;
+                this.vy *= 0.9;
+            }
+        }
+
+        function pushBalls(count = 1, x = origin.x, y = origin.y) {
+            for (let i = 0; i < count; i++) {
+                balls.push(new Ball(x, y));
+            }
+        }
+
+        function randBetween(min, max) {
+            return Math.floor(Math.random() * max) + min;
+        }
+
+        function loop() {
+            ctx.fillStyle = "rgba(255, 255, 255, 0)";
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < balls.length; i++) {
+                let b = balls[i];
+                if (b.r < 0) continue;
+                ctx.fillStyle = b.color;
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
+                ctx.fill();
+                b.update();
+            }
+            if (longPressed == true) {
+                multiplier += 0.2;
+            } else if (!longPressed && multiplier >= 0) {
+                multiplier -= 0.4;
+            }
+            removeBall();
+            requestAnimationFrame(loop);
+        }
+
+        function removeBall() {
+            for (let i = 0; i < balls.length; i++) {
+                let b = balls[i];
+                if (b.x + b.r < 0 || b.x - b.r > width || b.y + b.r < 0 || b.y - b.r > height || b.r < 0) {
+                    balls.splice(i, 1);
+                }
+            }
+        }
+    }
+    clickEffect();//调用特效函数
+</script>
+</body>
+
+</html>
