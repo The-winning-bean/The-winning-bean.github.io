@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>若朱似砂星映雪 ✨</title>
+    <link rel="stylesheet" href="new-css/common.css">
+    <style>
+        /* 侧边栏核心样式 */
+        :root {
+            --sidebar-width: 80px;
+            --sidebar-expand-width: 300px;
+            --icon-color: #ff7eb9;
+            --text-color: #4a4a4a;
+        }
+
+        p {
+            font-size: 24px;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 90vh;
+            position: fixed;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20px 0;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border-radius: 15px;
+        }
+
+        /* 悬停展开效果 */
+        .sidebar:hover {
+            width: var(--sidebar-expand-width);
+        }
+
+        /* 导航项样式 */
+        .nav-item {
+            position: relative;
+            padding: 12px 15px;
+            margin: 8px 10px;
+            border-radius: 15px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: background-color 0.5s ease-in-out, transform 0.2s;
+        }
+
+        .nav-item > i {
+            font-size: 24px;
+            color: var(--icon-color);
+            margin-right: 15px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item > span {
+            color: var(--text-color);
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            position: absolute;
+        }
+
+        /* 悬停状态 */
+        .sidebar:hover .nav-item > span {
+            opacity: 1;
+            position: static;
+        }
+
+        /* 子菜单动画 */
+        .sub-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            padding-left: 15px;
+        }
+
+        .sub-menu > a {
+            font-size: 20px;
+        }
+
+        .nav-item:hover .sub-menu {
+            max-height: 200px;
+        }
+
+        .sub-item {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            transform: translateX(-10px);
+            opacity: 0;
+        }
+
+        .sidebar:hover .sub-item {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            /*background-color: pink;*/
+            position: fixed;
+            width: 88vw;
+            display: block;
+            height: 87.5vh;
+            margin-left: calc(var(--sidebar-width) + 20px);
+            padding: 0 30px;
+            transition: margin 0.3s;
+        }
+
+        /* 侧边栏悬停时调整内容区 */
+        .sidebar:hover ~ .main-content {
+            margin-left: calc(var(--sidebar-expand-width) + 20px);
+        }
+
+        /* 可爱细节 */
+        .nav-item:hover {
+            background: rgba(255, 126, 185, 0.5);
+        }
+
+        .nav-item:hover > i {
+            transform: rotate(15deg);
+        }
+
+        .sub-item:hover {
+            background: rgba(122, 252, 255, 0.5);
+        }
+
+        iframe {
+            display: block;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 95vh;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 960px;
+            margin: auto;
+        }
+
+        .content-card h2 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .content-card p {
+            font-size: 20px;
+            line-height: 1.8;
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <nav class="sidebar">
+        <!-- 编码工具 -->
+        <div class="nav-item">
+            <i>✏️</i><span>良宵提笔</span>
+            <div class="sub-menu">
+                <a href="#" class="sub-item" data-src="new-node/PolarCTF.html">PolarCTF-WP</a>
+                <a href="#" class="sub-item" data-src="new-content/敬请期待.html">敬请期待</a>
+            </div>
+        </div>
+
+        <!-- 常用命令 -->
+        <div class="nav-item">
+            <i>🏹</i><span>行幡鸣弦</span>
+            <div class="sub-menu">
+                <a href="#" class="sub-item" data-src="new-content/敬请期待.html">敬请期待</a>
+                <a href="#" class="sub-item" data-src="new-content/敬请期待.html">敬请期待</a>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <i>🕷️</i><span>手握日月摘星辰</span>
+            <div class="sub-menu">
+                <a href="#" class="sub-item" data-src="new-content/敬请期待.html">敬请期待</a>
+                <a href="#" class="sub-item" data-src="new-content/敬请期待.html">敬请期待</a>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <i>🌌</i><span><a href="new-content/敬请期待.html">遗失的繁星</a></span>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 动态加载内容 -->
+        <div class="content-card">
+            <h2>✨ 若朱似砂星映雪 ✨</h2>
+            <p>可惜我文笔平平，</p>
+            <p>书不尽那摧眉难捱，道不清那闪躲惊骇。</p>
+            <p>可惜我文笔平平，</p>
+            <p>叙不完这笼中困兽，绘不出这燃尽心窟。</p>
+            <p>可惜我文笔平平，</p>
+            <p>描不了桑梓后的姱娥婵娟，写不下门扉前的霖霓霜露。</p>
+        </div>
+    </div>
+
+    <script>
+        // 智能收起功能
+        let sidebarTimer;
+        const sidebar = document.querySelector('.sidebar');
+
+        sidebar.addEventListener('mouseleave', () => {
+            sidebarTimer = setTimeout(() => {
+                // 收起所有子菜单
+                document.querySelectorAll('.sub-menu').forEach(menu => {
+                    menu.style.maxHeight = null;
+                });
+            }, 300);
+        });
+
+        sidebar.addEventListener('mouseenter', () => {
+            clearTimeout(sidebarTimer);
+        });
+
+        // 内容加载示例
+        document.querySelectorAll('.sub-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('.content-card').innerHTML = `
+                    <iframe src="${this.dataset.src}"></iframe>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

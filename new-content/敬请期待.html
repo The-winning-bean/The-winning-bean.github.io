@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>✨ 魔法加载中...</title>
+    <link rel="stylesheet" href="../new-css/common.css">
+    <style>
+        /* 新增专属样式 */
+        .coming-soon {
+            max-width: 800px;
+            margin: 10vh auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .magic-sparkle {
+            font-size: 8rem;
+            animation: sparkle 2s ease-in-out infinite;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 8px rgba(255,126,185,0.3));
+        }
+
+        .progress-bar {
+            width: 60%;
+            height: 15px;
+            background: rgba(122,252,255,0.2);
+            border-radius: 10px;
+            margin: 2rem auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff7eb9 0%, #7afcff 100%);
+            border-radius: 10px;
+            animation: progress 3s ease-in-out infinite;
+        }
+
+        .floating-text {
+            font-size: 1.5rem;
+            color: #666;
+            margin-top: 2rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(15deg); }
+            50% { transform: scale(0.95) rotate(-10deg); }
+            75% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        @keyframes progress {
+            0%, 100% { width: 45%; }
+            50% { width: 65%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .magic-bunnies {
+            position: absolute;
+            width: 80px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        .bunny1 {
+            top: 10%;
+            left: 10%;
+            animation: hop 8s linear infinite;
+        }
+        .bunny2 {
+            top: 30%;
+            right: 15%;
+            animation: hop 6s linear infinite 2s;
+        }
+
+        @keyframes hop {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(15deg); }
+            50% { transform: translateY(0) rotate(-10deg); }
+            75% { transform: translateY(-15px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景元素 -->
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjZmY3ZWJjIiBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptLTIgMTVjLS41NSAwLTEtLjQ1LTEtMXYtNGMwLS41NS40NS0xIDEtMXMxIC40NSAxIDF2NGMwIC41NS0uNDUgMS0xIDF6bTQgMGMtLjU1IDAtMS0uNDUtMS0xdi00YzAtLjU1LjQ1LTEgMS0xczEgLjQ1IDEgMXY0YzAgLjU1LS40NSAxLTEgMXoiLz48L3N2Zz4="
+         class="magic-bunnies bunny1" alt="装饰兔子">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjN2FmY2ZmIiBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptLTIgMTVjLS41NSAwLTEtLjQ1LTEtMXYtNGMwLS41NS40NS0xIDEtMXMxIC40NSAxIDF2NGMwIC41NS0uNDUgMS0xIDF6bTQgMGMtLjU1IDAtMS0uNDUtMS0xdi00YzAtLjU1LjQ1LTEgMS0xczEgLjQ1IDEgMXY0YzAgLjU1LS40NSAxLTEgMXoiLz48L3N2Zz4="
+         class="magic-bunnies bunny2" alt="装饰兔子">
+
+    <div class="container coming-soon">
+        <!-- 核心内容 -->
+        <div class="magic-sparkle">🎁</div>
+        <h1>魔法正在准备中...</h1>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <p class="floating-text">✨ 神秘配方正在调制 ✨<br>💫 奇妙功能即将上线 💫</p>
+
+        <!-- 返回按钮 -->
+        <button onclick="history.back()"
+                style="margin-top: 2rem; padding: 12px 24px;">
+            返回魔法大厅
+        </button>
+    </div>
+
+    <script>
+        // 添加动态星星
+        function createFallingStars() {
+            const star = document.createElement('div');
+            star.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: ${Math.random() > 0.5 ? '#ff7eb9' : '#7afcff'};
+                border-radius: 50%;
+                animation: fall ${Math.random()*3+2}s linear infinite;
+                left: ${Math.random()*100}%;
+                top: -10px;
+                filter: blur(1px);
+            `;
+            document.body.appendChild(star);
+
+            // 自动清理
+            setTimeout(() => star.remove(), 5000);
+        }
+
+        // 定时生成星星
+        setInterval(createFallingStars, 800);
+
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(110vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

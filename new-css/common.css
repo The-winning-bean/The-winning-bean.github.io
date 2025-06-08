@@ -1,0 +1,201 @@
+:root {
+    --primary: #ff7eb9;
+    --secondary: #7afcff;
+    --bg: linear-gradient(135deg, #fff5f5 0%, #f8fff4 100%);
+}
+
+body {
+    font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+    background: var(--bg);
+    /*min-height: 100vh;*/
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+/* 命令分类样式 */
+.command-section {
+    margin: 25px 0;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(122, 252, 255, 0.1);
+    border: 2px solid var(--secondary);
+}
+
+.command-section h2 {
+    margin: 0 0 15px;
+    color: var(--primary);
+    font-size: 1.8em;
+}
+
+/* 命令卡片 */
+.command-card {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.command-card.common {
+    border-left: 5px solid var(--primary);
+}
+
+.command-card.advanced {
+    border-left: 5px solid #7afcff;
+}
+
+.command-card:hover {
+    transform: translateX(10px);
+}
+
+/* 命令内容样式 */
+.command-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.command-icon {
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+.command-title {
+    font-weight: bold;
+    color: #666;
+    font-size: 1.2em;
+}
+
+.command-desc {
+    color: #888;
+    margin: 8px 0;
+    padding-left: 25px;
+    font-size: 20px;
+}
+
+.command-code {
+    background: #f8f8f8;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    color: #333;
+    margin: 10px 0;
+    white-space: pre-wrap;
+}
+
+.bubble {
+    position: fixed;
+    background: var(--secondary);
+    border-radius: 50%;
+    animation: float 8s infinite;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* 按钮组样式 */
+.btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 15px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 16px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: #ff69b4;
+}
+
+button.active {
+    background: var(--secondary);
+    color: #333;
+}
+
+/* 文本框样式 */
+textarea {
+    width: 96%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid var(--primary);
+    border-radius: 15px;
+    resize: vertical;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    border-color: var(--secondary);
+    outline: none;
+}
+
+label {
+    display: block;
+    margin: 15px 0 5px;
+    color: #666;
+    font-size: 18px;
+}
+
+/* cheatsheet 样式 */
+.cheatsheet {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 126, 185, 0.1);
+    border-radius: 15px;
+}
+
+.cheatsheet h3 {
+    margin: 0 0 15px;
+    color: var(--primary);
+    font-size: 22px;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .command-card {
+        padding: 10px;
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-20px) rotate(5deg); }
+    50% { transform: translateY(0) rotate(-5deg); }
+    75% { transform: translateY(20px) rotate(5deg); }
+}
+

