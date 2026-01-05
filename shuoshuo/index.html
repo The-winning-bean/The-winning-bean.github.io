@@ -1006,7 +1006,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     href="/shuoshuo/"
                     rounded
                     
-                    variant="filled"
+                    active
                     
                 >
                     <mdui-icon slot="icon" name="chat"></mdui-icon>
@@ -1021,13 +1021,422 @@ document.addEventListener('DOMContentLoaded', function() {
 </mdui-navigation-drawer>
     <main class="main">
         <div class="page-transition-container">
-            <div class="banner-wrapper">
+            
+<script src="/js/fancybox.js"></script>
+
+
+<style>
+.post-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.post-card-wide {
+    border-radius: 20px;
+    background-color: rgb(var(--mdui-color-surface-container-low));
+    box-shadow: none;
+}
+
+.post-card-comment {
+    border-radius: 20px;
+    background-color: rgb(var(--mdui-color-surface-container-low));
+    box-shadow: none;
+    padding: 2.5rem;
+}
+
+.post-card-nav {
+    border-radius: 20px;
+    background-color: rgb(var(--mdui-color-surface-container-low));
+    box-shadow: none;
+    padding: 2.5rem;
+}
+
+.markdown-section img,
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.2em auto;
+    object-fit: contain;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.caption {
+  color: #444;
+  display: block;
+  font-size: 0.9em;
+  margin-top: 0.1em;
+  position: relative;
+  text-align: center;
+}
+
+.article-content {
+    color: rgb(var(--mdui-color-on-surface));
+    line-height: 1.8;
+    font-family: var(--mdui-font-family);
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+    color: rgb(var(--mdui-color-primary));
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
+.article-content p {
+    margin-bottom: 1.2em;
+}
+
+.article-content a {
+    color: rgb(var(--mdui-color-primary));
+    text-decoration: none;
+    border-bottom: 1px dashed rgb(var(--mdui-color-primary));
+}
+
+.article-content a:hover {
+    opacity: 0.8;
+}
+
+.article-content code {
+    background-color: rgb(var(--mdui-color-surface-container-high));
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--mdui-font-family-mono);
+    word-break: break-word;
+}
+
+/* 修复代码块样式 - 关键修复 */
+.mdui-code-block {
+    background: rgb(var(--mdui-color-surface-container-high));
+    border-radius: 12px;
+    margin: 1.5em 0;
+    overflow: hidden;
+    font-family: var(--mdui-font-family-mono);
+    width: 100%;
+    box-sizing: border-box;
+    /* 确保代码块不会超出容器 */
+    max-width: 100%;
+}
+
+.mdui-code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgb(var(--mdui-color-surface-container-highest));
+    border-bottom: 1px solid rgb(var(--mdui-color-outline-variant));
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.mdui-code-language {
+    color: rgb(var(--mdui-color-on-surface-variant));
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: var(--mdui-font-family);
+    flex-shrink: 0;
+}
+
+.mdui-code-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.mdui-code-toggle {
+    color: rgb(var(--mdui-color-on-surface-variant));
+    cursor: pointer;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.mdui-code-toggle:hover {
+    color: rgb(var(--mdui-color-primary));
+}
+
+.mdui-code-copy {
+    color: rgb(var(--mdui-color-on-surface-variant));
+    cursor: pointer;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.mdui-code-copy:hover {
+    color: rgb(var(--mdui-color-primary));
+}
+
+.mdui-code-copy.copied {
+    color: rgb(var(--mdui-color-success));
+}
+
+/* 关键修复：代码内容区域 */
+.mdui-code-content {
+    position: relative;
+    background: rgb(var(--mdui-color-surface-container-high));
+    width: 100%;
+    box-sizing: border-box;
+    /* 修复滚动问题 */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* 确保内容可以水平滚动 */
+    display: block;
+}
+
+/* 关键修复：代码内容本身 */
+.mdui-code-pre {
+    margin: 0;
+    padding: 16px;
+    font-family: var(--mdui-font-family-mono);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(var(--mdui-color-on-surface));
+    /* 关键：保持代码不换行 */
+    white-space: pre;
+    /* 关键：让内容自然扩展 */
+    display: inline-block;
+    min-width: min-content;
+    box-sizing: border-box;
+    /* 确保代码可以超出容器宽度 */
+    max-width: none;
+}
+
+/* 自定义滚动条样式 */
+.mdui-code-content::-webkit-scrollbar {
+    height: 8px;
+}
+
+.mdui-code-content::-webkit-scrollbar-track {
+    background: rgb(var(--mdui-color-surface-container));
+    border-radius: 0 0 4px 4px;
+}
+
+.mdui-code-content::-webkit-scrollbar-thumb {
+    background: rgb(var(--mdui-color-outline-variant));
+    border-radius: 4px;
+}
+
+.mdui-code-content::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--mdui-color-outline));
+}
+
+/* Firefox 滚动条样式 */
+.mdui-code-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--mdui-color-outline-variant)) rgb(var(--mdui-color-surface-container));
+}
+
+.mdui-code-block.collapsed .mdui-code-content {
+    display: none;
+}
+
+.mdui-code-block.collapsed .mdui-code-toggle .expand-icon {
+    display: inline;
+}
+
+.mdui-code-block.collapsed .mdui-code-toggle .collapse-icon {
+    display: none;
+}
+
+.mdui-code-block:not(.collapsed) .mdui-code-toggle .expand-icon {
+    display: none;
+}
+
+.mdui-code-block:not(.collapsed) .mdui-code-toggle .collapse-icon {
+    display: inline;
+}
+
+.article-content pre {
+    background-color: rgb(var(--mdui-color-surface-container-high));
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.article-content blockquote {
+    border-left: 4px solid rgb(var(--mdui-color-primary));
+    padding: 8px 16px;
+    margin: 16px 0;
+    background-color: rgb(var(--mdui-color-surface-container));
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 32px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.article-content li {
+    margin-bottom: 8px;
+    word-break: break-word;
+}
+
+.post-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 1rem 0;
+}
+
+.nav-button {
+    flex: 1;
+    text-align: center;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: rgb(var(--mdui-color-surface-container));
+    color: rgb(var(--mdui-color-on-surface));
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+.nav-button:hover {
+    background-color: rgb(var(--mdui-color-surface-container-high));
+    transform: translateY(-2px);
+}
+
+.nav-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nav-button.disabled:hover {
+    background-color: rgb(var(--mdui-color-surface-container));
+    transform: none;
+}
+
+.nav-label {
+    font-size: 0.875rem;
+    color: rgb(var(--mdui-color-on-surface-variant));
+}
+
+.nav-title {
+    font-weight: 500;
+}
+
+/* 平板设备 */
+@media (max-width: 1024px) {
+    .post-container {
+        padding: 2rem 24px;
+        gap: 20px;
+    }
+    
+    .post-card-wide,
+    .post-card-comment,
+    .post-card-nav {
+        padding: 2rem;
+    }
+}
+
+/* 手机设备 */
+@media (max-width: 768px) {
+    .post-container {
+        padding: 24px 16px;
+        gap: 16px;
+    }
+    
+    .post-card-wide {
+        padding: 1.5rem;
+    }
+    
+    .post-card-comment,
+    .post-card-nav {
+        padding: 1.5rem;
+    }
+    
+    .post-navigation {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .mdui-code-header {
+        padding: 10px 12px;
+    }
+    
+    .mdui-code-pre {
+        padding: 12px;
+        font-size: 0.8125rem;
+    }
+    
+    .mdui-code-content::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    /* 移动端代码块特殊处理 */
+    .mdui-code-block {
+        margin: 1em 0;
+        border-radius: 8px;
+    }
+    
+    .article-content {
+        font-size: 0.9375rem;
+    }
+}
+
+/* 小屏手机 */
+@media (max-width: 480px) {
+    .post-container {
+        padding: 20px 12px;
+        gap: 12px;
+    }
+    
+    .post-card-wide,
+    .post-card-comment,
+    .post-card-nav {
+        padding: 1rem;
+        border-radius: 16px;
+    }
+    
+    .mdui-code-pre {
+        padding: 10px;
+        font-size: 0.75rem;
+    }
+    
+    .article-content ul,
+    .article-content ol {
+        padding-left: 24px;
+    }
+    
+    .mdui-code-header {
+        padding: 8px 12px;
+    }
+    
+    .mdui-code-language {
+        font-size: 0.75rem;
+    }
+}
+</style>
+
+<mdui-layout-main>
     <link rel="stylesheet" href="/fonts/banner/banner.css">
 
 <div class="banner-container">
     <mdui-card class="banner-title">
-        <div class="banner-title-text1">Materialis</div>
-        <div class="banner-title-text2">A Material Design 3 theme for Hexo.</div>
+        <div class="banner-title-text1">shuoshuo</div>
+        <div class="banner-title-text2"></div>
         
     </mdui-card>
     
@@ -1062,56 +1471,195 @@ if (location.pathname !== '/post/') {
         .catch(console.error)
 }
 </script>
-</div>
-<mdui-layout-main>
-    <div class="articles-container">
-        
-        
-        
-            
-                <mdui-card 
-    class="article-card" 
-    variant="filled"
-    onclick="location.href='/2026/01/03/hello-world/'">
-    
-    <div class="article-content">
-        <!-- 封面图片 -->
-        
-        
-        <!-- 内容区域 -->
-        <div class="article-main">
-            <mdui-typography class="article-title">
-                Hello World
-            </mdui-typography>
 
-            <!-- 有封面时摘要限制20字 -->
-            
-                <span>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu...</span>
-            
-            
-            <div class="article-meta">
-                <mdui-typography variant="body2" class="article-date">
-                    <mdui-icon name="calendar_today" style="font-size: 1.1rem;"></mdui-icon>
-                    2026-01-03
-                </mdui-typography>
-                
-                <div class="article-tags">
+    <div class="post-container">
+        <!-- 内容卡片 -->
+        <mdui-card variant="filled" class="post-card-wide">
+            <mdui-card-content>
+                <div class="article-content">
                     
                 </div>
-            </div>
-        </div>
-        
-        <!-- 右侧：阅读更多 -->
-        <mdui-button class="article-side" variant="tonal">
-            <mdui-icon name="arrow_forward"></mdui-icon>
-        </mdui-button>
-    </div>
-</mdui-card>
-            
-        
+            </mdui-card-content>
+        </mdui-card>
+
+        <!-- 上一篇/下一篇导航 -->
+        <mdui-card variant="filled" class="post-card-nav">
+            <mdui-card-content>
+                <div class="post-navigation">
+                    
+                        <a class="nav-button disabled">
+                            <span class="nav-label">上一篇</span>
+                            <span class="nav-title">没有了</span>
+                        </a>
+                    
+                    
+                    
+                        <a class="nav-button disabled">
+                            <span class="nav-label">下一篇</span>
+                            <span class="nav-title">没有了</span>
+                        </a>
+                    
+                </div>
+            </mdui-card-content>
+        </mdui-card>
+
+        <!-- 评论卡片 -->
+        <mdui-card variant="filled" class="post-card-comment">
+            <mdui-card-content>
+                <mdui-typography variant="h5" style="margin-bottom: 1.5rem; text-align: center; color: rgb(var(--mdui-color-primary));">
+                    评论
+                </mdui-typography>
+                
+                    
+                        
+<div id="tcomment"></div>
+<script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.min.js"></script>
+<script>
+twikoo.init({
+  envId: 'https://pinglun.yizhixiaozhu.top',
+  el: '#tcomment',
+  // region: 'ap-guangzhou', // 腾讯云环境时需要，Vercel 不需要
+  path: location.pathname,
+  lang: 'zh-CN'
+}).then(function () {
+  console.log('Twikoo 评论系统加载成功');
+}).catch(function (err) {
+  console.error('Twikoo 评论系统加载失败:', err);
+});
+</script>
+
+
+                    
+                
+            </mdui-card-content>
+        </mdui-card>
     </div>
 </mdui-layout-main>
+
+<script>
+// 代码块功能增强
+document.addEventListener('DOMContentLoaded', function() {
+    // 处理现有的 pre 代码块
+    document.querySelectorAll('pre').forEach(pre => {
+        // 检查是否已经被处理过
+        if (pre.closest('.mdui-code-block')) {
+            return;
+        }
+        
+        const codeBlock = document.createElement('div');
+        codeBlock.className = 'mdui-code-block';
+        
+        // 获取语言类型
+        let language = 'Code';
+        const codeClass = pre.querySelector('code')?.className;
+        if (codeClass) {
+            const match = codeClass.match(/language-(\w+)/);
+            if (match) {
+                language = match[1];
+            }
+        }
+        
+        // 创建代码块头部
+        const header = document.createElement('div');
+        header.className = 'mdui-code-header';
+        header.innerHTML = `
+            <span class="mdui-code-language">${language}</span>
+            <div class="mdui-code-actions">
+                <span class="mdui-code-toggle">
+                    <mdui-icon class="collapse-icon" size="small">unfold_less</mdui-icon>
+                    <mdui-icon class="expand-icon" size="small">unfold_more</mdui-icon>
+                </span>
+                <span class="mdui-code-copy">
+                    <mdui-icon size="small">content_copy</mdui-icon>
+                </span>
+            </div>
+        `;
+        
+        // 创建代码内容区域
+        const content = document.createElement('div');
+        content.className = 'mdui-code-content';
+        const codePre = document.createElement('pre');
+        codePre.className = 'mdui-code-pre';
+        codePre.innerHTML = pre.innerHTML;
+        content.appendChild(codePre);
+        
+        // 组装代码块
+        codeBlock.appendChild(header);
+        codeBlock.appendChild(content);
+        
+        // 替换原始 pre 元素
+        pre.parentNode.replaceChild(codeBlock, pre);
+    });
+    
+    // 添加折叠/展开功能
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.mdui-code-toggle')) {
+            const codeBlock = e.target.closest('.mdui-code-block');
+            codeBlock.classList.toggle('collapsed');
+        }
+    });
+    
+    // 添加复制功能
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.mdui-code-copy')) {
+            const codeBlock = e.target.closest('.mdui-code-block');
+            const codeContent = codeBlock.querySelector('.mdui-code-pre').textContent;
+            const copyButton = e.target.closest('.mdui-code-copy');
+            
+            navigator.clipboard.writeText(codeContent).then(() => {
+                const originalHTML = copyButton.innerHTML;
+                copyButton.innerHTML = '<mdui-icon size="small" style="color: var(--mdui-color-success)">check</mdui-icon>';
+                copyButton.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = originalHTML;
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败:', err);
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = codeContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalHTML = copyButton.innerHTML;
+                copyButton.innerHTML = '<mdui-icon size="small" style="color: var(--mdui-color-success)">check</mdui-icon>';
+                copyButton.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = originalHTML;
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    });
+    
+    // 修复移动端代码块显示问题
+    function fixCodeBlocksOnMobile() {
+        document.querySelectorAll('.mdui-code-block').forEach(block => {
+            const content = block.querySelector('.mdui-code-content');
+            const pre = block.querySelector('.mdui-code-pre');
+            
+            if (content && pre) {
+                // 确保代码块在移动端可以正确滚动
+                content.style.overflowX = 'auto';
+                pre.style.whiteSpace = 'pre';
+                pre.style.display = 'inline-block';
+                pre.style.minWidth = 'min-content';
+            }
+        });
+    }
+    
+    // 初始修复
+    fixCodeBlocksOnMobile();
+    
+    // 窗口大小改变时重新修复
+    window.addEventListener('resize', fixCodeBlocksOnMobile);
+});
+</script>
         </div>
     </main>
 
